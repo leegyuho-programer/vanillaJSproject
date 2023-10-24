@@ -17,18 +17,12 @@ let answer = "";
 let life = 5;
 let guessed = [];
 let wordStatus = null;
-
-function $(selector) {
-  return document.querySelector(selector);
-}
-
-function addClass(element, className) {
-  element.classList.add(className);
-}
-
-function createElement(tagName) {
-  return document.createElement(tagName);
-}
+/* const aaaa = {
+  answer : "",
+  life: 5,
+  guessed: [],
+  wordStatus: null,
+} */
 
 // //랜덤 단어 생성
 // const createRandomWords = async () => {
@@ -43,13 +37,18 @@ function createElement(tagName) {
 //   // return word;
 // };
 
+const gameButton = document.querySelector(".game-button");
+const mistakes = document.querySelector("#mistakes");
+
+//랜덤으로 단어를 생성해주는 함수
 function randomWord() {
   answer = fruits[Math.floor(Math.random() * fruits.length)];
 }
 
+//알파벳을 맞추면 보여주고 틀리면 life를 깎는 함수
 function handleGuess(chosenLetter) {
   guessed.indexOf(chosenLetter) === -1 ? guessed.push(chosenLetter) : null;
-  document.getElementById(chosenLetter).setAttribute("disabled", true);
+  console.log(guessed);
 
   if (answer.indexOf(chosenLetter) >= 0) {
     guessedWord();
@@ -57,22 +56,30 @@ function handleGuess(chosenLetter) {
   } else if (answer.indexOf(chosenLetter) === -1) {
     life--;
     checkGameLose();
+    mistakes.innerHTML = `${life}`;
   }
 }
 
+//초기화 하는 함수
+//만들기
+
+//정답을 맞췄을 때 실행되는 함수
 function checkGameWin() {
   if (wordStatus === answer) {
     alert("You Win!!");
   }
 }
 
+//목숨이 0이 됐을 때 실행되는 함수
 function checkGameLose() {
   if (life === 0) {
     alert("You Lose!!");
   }
 }
 
+//답을 '_'로 바꿔주는 함수
 function guessedWord() {
+  console.log(answer);
   wordStatus = answer
     .split("")
     .map((letter) => (guessed.indexOf(letter) >= 0 ? letter : " _ "))
@@ -81,6 +88,7 @@ function guessedWord() {
   document.getElementById("wordSpotlight").innerHTML = wordStatus;
 }
 
+//리셋하는 함수
 function reset() {
   life = 5;
   guessed = [];
@@ -88,6 +96,15 @@ function reset() {
   randomWord();
   guessedWord();
 }
+
+//이벤트를 넘겨주는 함수
+function handleKeyDown(event) {
+  console.log(event);
+  handleGuess(event.key);
+}
+
+gameButton.addEventListener("click", reset);
+window.addEventListener("keydown", handleKeyDown);
 
 randomWord();
 guessedWord();
