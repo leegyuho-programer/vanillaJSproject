@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HANGMAN</title>
+    <link href="./src/reset.css" rel="stylesheet" type="text/css" />
+    <link href="./src/style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">H A N G M A N</h1>
+    </div>
+    <div class="text-center">
+      <p id="wordSpotlight">The word to be guessed goes here</p>
+      <p id="life">Guess left: <span id="mistakes">5</span></p>
+      <button class="btn btn-info" onClick="reset()">Reset</button>
+    </div>
+    <script type="module" src="./src/index.js"></script>
+  </body>
+</html>
